@@ -1,7 +1,9 @@
 package com.example1.demo1.service;
 
 import com.example1.demo1.model.Book;
+import com.example1.demo1.model.User;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -13,4 +15,5 @@ public interface BookService {
     Optional<Book> getBook(Long id);
     Book updateBook(Book book);
     void deleteBook(Long id);
+    List<User> getUserByBooks(Long userId);
 }

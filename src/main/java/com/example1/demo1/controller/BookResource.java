@@ -47,4 +47,10 @@ public class BookResource {
     public Book updateBook(@RequestBody Book book){
       return bookService.updateBook(book);
     }
+
+    @ApiOperation(value = "this api is getUsersByBook")
+    @RequestMapping(value = "/getUserByBook", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Book getUserByBooks(@RequestBody Book book){
+        return bookService.updateBook(book);
+    }
 }

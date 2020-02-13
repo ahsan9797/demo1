@@ -4,34 +4,33 @@ import javax.persistence.*;
 
 /**
  * @author : Ahsan Ahmad
- * @created on : 2/9/2020, Sun
+ * @created on : 2/10/2020, Mon
  **/
 @Entity
-@Table(name = "book")
-public class Book {
+@Table(name = "periadical")
+public class Periodical {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "title")
     private String title;
 
-    @Column(name = "year")
-    private String year;
+    @Column(name = "volume")
+    private String volume;
 
     @Column(name = "isbn")
     private String isbn;
 
-    @Column(name = "pages")
-    private int pages;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "userid", referencedColumnName = "id")
+    User user;
 
-    @Column(name = "userid")
-    private Long userId;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "userid",  nullable = true, insertable = false, updatable = false)
-    private User user;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "publisherid", referencedColumnName = "id")
+    Publisher publisher;
 
     public Long getId() {
         return id;
@@ -49,12 +48,12 @@ public class Book {
         this.title = title;
     }
 
-    public String getYear() {
-        return year;
+    public String getVolume() {
+        return volume;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setVolume(String volume) {
+        this.volume = volume;
     }
 
     public String getIsbn() {
@@ -65,22 +64,6 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public int getPages() {
-        return pages;
-    }
-
-    public void setPages(int pages) {
-        this.pages = pages;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
     public User getUser() {
         return user;
     }
@@ -89,16 +72,23 @@ public class Book {
         this.user = user;
     }
 
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
     @Override
     public String toString() {
-        return "Book{" +
+        return "Periodical{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", year='" + year + '\'' +
+                ", volume='" + volume + '\'' +
                 ", isbn='" + isbn + '\'' +
-                ", pages=" + pages +
-                ", userId=" + userId +
                 ", user=" + user +
+                ", publisher=" + publisher +
                 '}';
     }
 }

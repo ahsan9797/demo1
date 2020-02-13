@@ -1,12 +1,14 @@
 package com.example1.demo1.service.impl;
 
 import com.example1.demo1.model.Book;
+import com.example1.demo1.model.User;
 import com.example1.demo1.repository.BookRepository;
 import com.example1.demo1.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -43,5 +45,9 @@ public class BookServiceImpl implements BookService {
     public void deleteBook(Long id) {
         Optional<Book> book = bookRepository.findById(id);
         book.ifPresent(bookRepository :: delete);
+    }
+
+    public List<User> getUserByBooks(Long userId){
+        return null;
     }
 }

@@ -29,7 +29,6 @@ public class MessageServiceImpl implements MessageService {
     }
 
     public void createMessage(Message message){
-        userRepository.save(message.getUser());
         messageRepository.save(message);
     }
 

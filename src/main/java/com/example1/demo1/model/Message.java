@@ -18,7 +18,7 @@ public class Message {
     private String text;
 
     @ManyToOne(fetch =  FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "userid", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "userid", referencedColumnName = "id", nullable = true)
     private User user;
 
     public long getId() {
