@@ -4,6 +4,7 @@ import com.example1.demo1.model.User;
 import com.example1.demo1.repository.UserRepository;
 import com.example1.demo1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,6 +23,9 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserRepository userRepository){
         this.userRepository = userRepository;
     }
+
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
     public Optional<User> getUser(long id){
         Optional<User> user = userRepository.findById(id);
         return user;
@@ -29,6 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 

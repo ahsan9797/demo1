@@ -1,11 +1,13 @@
 package com.example1.demo1.controller;
 
 import com.example1.demo1.model.User;
+import com.example1.demo1.repository.UserRepository;
 import com.example1.demo1.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -21,6 +23,12 @@ public class UserResource {
     UserService userService;
 
     @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     public UserResource(UserService userService){
         this.userService = userService;
     }
@@ -34,7 +42,7 @@ public class UserResource {
     }
 
     @ApiOperation(value = "this operation is to create a new user")
-    @RequestMapping(value = "/createUser", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/createUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     private void createUser(@RequestBody User user){
         userService.createUser(user);
     }
@@ -49,5 +57,12 @@ public class UserResource {
     @RequestMapping(value = "/deleteUserById", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     private void updateUser(@RequestBody User user){
         userService.updateUser(user);
+    }
+
+    @ApiOperation(value = "this operation is to sign-up user")
+    @RequestMapping(value = "/sign-up", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void signUp(@RequestBody User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 }
